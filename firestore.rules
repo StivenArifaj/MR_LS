@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow anyone to submit to the newsletter
+    match /newsletter/{entry} {
+      allow create: if true;
+    }
+
+    // Allow anyone to submit a demo request
+    match /demoRequests/{request} {
+      allow create: if true;
+    }
+
+    // Rules for the users collection
+    match /users/{userId} {
+      // Allow anyone to create a new user account (register)
+      allow create: if true;
+
+      // Allow authenticated users to read and update their own document
+      allow read, update: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}

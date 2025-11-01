@@ -1,6 +1,11 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Play, ChevronDown, TrendingUp, Wallet, Target } from "lucide-react"
 import Link from "next/link"
 
@@ -62,14 +67,26 @@ export function HeroSection() {
             >
               <Link href="/register">Start Learning Free</Link>
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-border/50 hover:border-[var(--neon-blue)] text-lg px-8 py-6 group bg-transparent"
-            >
-              <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-              Watch Demo
-            </Button>
+            
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-border/50 hover:border-[var(--neon-blue)] text-lg px-8 py-6 group bg-transparent"
+                >
+                  <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                  Watch Demo
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-4xl p-0 bg-transparent border-0">
+                  <video className="w-full rounded-lg" controls autoPlay>
+                    <source src="/20250611131857.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+              </DialogContent>
+            </Dialog>
+
           </div>
 
           {/* Hero Visual with Phoenix Image */}

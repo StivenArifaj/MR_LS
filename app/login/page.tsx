@@ -2,15 +2,37 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Zap, Eye, EyeOff, ArrowLeft } from "lucide-react"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { auth } from "@/lib/firebase"
+import { signInWithEmailAndPassword } from "firebase/auth"
 
 export default function LoginPage() {
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      router.push('/');
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
@@ -74,29 +96,19 @@ export default function LoginPage() {
             <h2 className="text-3xl font-bold mb-2">Login to Your Account</h2>
             <p className="text-muted-foreground">Enter your credentials to continue</p>
           </div>
+          
+          {error && <p className="text-red-500 text-center font-medium">{error}</p>}
 
-          <form className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="accountType">Account Type</Label>
-              <Select defaultValue="student">
-                <SelectTrigger className="glass border-border/50 focus:border-[var(--neon-blue)]">
-                  <SelectValue placeholder="Select account type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="student">Student</SelectItem>
-                  <SelectItem value="parent">Parent</SelectItem>
-                  <SelectItem value="educator">Educator</SelectItem>
-                  <SelectItem value="institution">School / Institution</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email">Email / Username</Label>
               <Input
                 id="email"
-                type="text"
+                type="email"
                 placeholder="you@example.com"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="glass border-border/50 focus:border-[var(--neon-blue)]"
               />
             </div>
@@ -108,6 +120,9 @@ export default function LoginPage() {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="glass border-border/50 focus:border-[var(--neon-blue)] pr-10"
                 />
                 <button
@@ -132,8 +147,8 @@ export default function LoginPage() {
               </Link>
             </div>
 
-            <Button className="w-full bg-gradient-to-r from-[var(--neon-blue)] to-[var(--neon-purple)] glow-blue text-lg py-6">
-              Login
+            <Button type="submit" disabled={isSubmitting} className="w-full bg-gradient-to-r from-[var(--neon-blue)] to-[var(--neon-purple)] glow-blue text-lg py-6">
+              {isSubmitting ? 'Logging In...' : 'Login'}
             </Button>
           </form>
 

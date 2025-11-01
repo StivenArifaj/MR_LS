@@ -4,20 +4,44 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Zap, LogOut } from "lucide-react"
+import { auth } from "@/lib/firebase"
+import { onAuthStateChanged, signOut } from "firebase/auth"
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [userEmail, setUserEmail] = useState("user@example.com")
+  const [userEmail, setUserEmail] = useState<string | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
     }
     window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLoggedIn(true)
+        setUserEmail(user.email)
+      } else {
+        setIsLoggedIn(false)
+        setUserEmail(null)
+      }
+    })
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      unsubscribe()
+    }
   }, [])
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth)
+    } catch (error) {
+      console.error("Error signing out: ", error)
+    }
+  }
 
   const navItems = [
     { label: "Home", href: "#home" },
@@ -56,7 +80,7 @@ export function Navigation() {
           ))}
         </div>
 
-        {isLoggedIn ? (
+        {isLoggedIn && userEmail ? (
           <div className="hidden md:flex items-center gap-4">
             <div className="flex items-center gap-3 glass rounded-full px-4 py-2">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--neon-blue)] to-[var(--neon-purple)] flex items-center justify-center">
@@ -67,7 +91,7 @@ export function Navigation() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setIsLoggedIn(false)}
+              onClick={handleLogout}
               className="border-border/50 hover:border-[var(--neon-blue)] bg-transparent"
             >
               <LogOut className="w-4 h-4 mr-2" />
@@ -119,14 +143,14 @@ export function Navigation() {
             </Link>
           ))}
           <div className="pt-4 space-y-2">
-            {isLoggedIn ? (
+            {isLoggedIn && userEmail ? (
               <>
                 <div className="glass rounded-lg p-3 mb-2">
                   <p className="text-sm font-medium">{userEmail}</p>
                 </div>
                 <Button
                   onClick={() => {
-                    setIsLoggedIn(false)
+                    handleLogout()
                     setIsMobileMenuOpen(false)
                   }}
                   className="w-full"

@@ -1,11 +1,45 @@
 "use client"
 
 import Link from "next/link"
-import { Zap, Mail, Github, Twitter, Linkedin } from "lucide-react"
+import { Zap, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useState } from "react"
 
 export function Footer() {
+  const [email, setEmail] = useState("")
+  const [message, setMessage] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setMessage("")
+
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.message || "Something went wrong")
+      }
+
+      setMessage(data.message)
+      setEmail("")
+    } catch (error: any) {
+      setMessage(error.message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <footer className="border-t border-border/50 py-16 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-background to-[var(--neon-blue)]/5" />
@@ -26,17 +60,6 @@ export function Footer() {
               Changing financial education forever through immersive, gamified learning. Turn every smartphone into a
               powerful learning machine.
             </p>
-            <div className="flex gap-3">
-              <Button size="icon" variant="outline" className="hover:border-[var(--neon-blue)] bg-transparent">
-                <Twitter className="w-5 h-5" />
-              </Button>
-              <Button size="icon" variant="outline" className="hover:border-[var(--neon-blue)] bg-transparent">
-                <Linkedin className="w-5 h-5" />
-              </Button>
-              <Button size="icon" variant="outline" className="hover:border-[var(--neon-blue)] bg-transparent">
-                <Github className="w-5 h-5" />
-              </Button>
-            </div>
           </div>
 
           {/* Product */}
@@ -78,8 +101,7 @@ export function Footer() {
               <li>
                 <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                   Blog
-                </Link>
-              </li>
+                </Link>              </li>
               <li>
                 <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                   Help Center
@@ -110,16 +132,25 @@ export function Footer() {
             <Mail className="w-8 h-8 text-[var(--neon-blue)] mx-auto mb-4" />
             <h3 className="text-2xl font-bold mb-2">Stay Updated</h3>
             <p className="text-muted-foreground mb-6">Get financial literacy tips and product updates</p>
-            <div className="flex gap-2 max-w-md mx-auto">
+            <p className="text-muted-foreground mb-6">Contact: moneyrush.page@gmail.com</p>
+            <form onSubmit={handleSubmit} className="flex gap-2 max-w-md mx-auto">
               <Input
                 type="email"
                 placeholder="Enter your email"
                 className="glass border-border/50 focus:border-[var(--neon-blue)]"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
-              <Button className="bg-gradient-to-r from-[var(--neon-blue)] to-[var(--neon-purple)] glow-blue">
-                Subscribe
+              <Button 
+                type="submit"
+                className="bg-gradient-to-r from-[var(--neon-blue)] to-[var(--neon-purple)] glow-blue"
+                disabled={isLoading}
+              >
+                {isLoading ? "Subscribing..." : "Subscribe"}
               </Button>
-            </div>
+            </form>
+            {message && <p className="mt-4 text-sm text-muted-foreground">{message}</p>}
           </div>
         </div>
 

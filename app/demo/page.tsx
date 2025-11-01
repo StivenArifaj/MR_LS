@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -13,12 +12,60 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Zap, ArrowLeft, CheckCircle2 } from "lucide-react"
 
 export default function DemoPage() {
-  const [submitted, setSubmitted] = useState(false)
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitted(true)
-  }
+  const [formData, setFormData] = useState({
+    fullName: "",
+    schoolName: "",
+    role: "",
+    email: "",
+    phone: "",
+    location: "",
+    message: "",
+    demoType: "live-call",
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleRoleChange = (value: string) => {
+    setFormData({ ...formData, role: value });
+  };
+
+  const handleDemoTypeChange = (value: string) => {
+    setFormData({ ...formData, demoType: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/demo-request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "An unexpected error occurred.");
+      }
+
+      setSubmitted(true);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   if (submitted) {
     return (
@@ -36,7 +83,7 @@ export default function DemoPage() {
           </Button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -72,6 +119,7 @@ export default function DemoPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="glass rounded-3xl p-8 md:p-12 space-y-6">
+            {error && <p className="text-red-500 text-center">{error}</p>}
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="fullName">Full Name *</Label>
@@ -80,6 +128,8 @@ export default function DemoPage() {
                   type="text"
                   placeholder="John Doe"
                   required
+                  value={formData.fullName}
+                  onChange={handleInputChange}
                   className="glass border-border/50 focus:border-[var(--neon-blue)]"
                 />
               </div>
@@ -91,6 +141,8 @@ export default function DemoPage() {
                   type="text"
                   placeholder="Lincoln High School"
                   required
+                  value={formData.schoolName}
+                  onChange={handleInputChange}
                   className="glass border-border/50 focus:border-[var(--neon-blue)]"
                 />
               </div>
@@ -98,7 +150,7 @@ export default function DemoPage() {
 
             <div className="space-y-2">
               <Label htmlFor="role">Role *</Label>
-              <Select required>
+              <Select required onValueChange={handleRoleChange} value={formData.role}>
                 <SelectTrigger className="glass border-border/50 focus:border-[var(--neon-blue)]">
                   <SelectValue placeholder="Select your role" />
                 </SelectTrigger>
@@ -119,6 +171,8 @@ export default function DemoPage() {
                   type="email"
                   placeholder="you@school.edu"
                   required
+                  value={formData.email}
+                  onChange={handleInputChange}
                   className="glass border-border/50 focus:border-[var(--neon-blue)]"
                 />
               </div>
@@ -129,6 +183,8 @@ export default function DemoPage() {
                   id="phone"
                   type="tel"
                   placeholder="+1 (555) 123-4567"
+                  value={formData.phone}
+                  onChange={handleInputChange}
                   className="glass border-border/50 focus:border-[var(--neon-blue)]"
                 />
               </div>
@@ -141,6 +197,8 @@ export default function DemoPage() {
                 type="text"
                 placeholder="New York, USA"
                 required
+                value={formData.location}
+                onChange={handleInputChange}
                 className="glass border-border/50 focus:border-[var(--neon-blue)]"
               />
             </div>
@@ -151,13 +209,15 @@ export default function DemoPage() {
                 id="message"
                 placeholder="Tell us about your school and what you're looking for..."
                 rows={4}
+                value={formData.message}
+                onChange={handleInputChange}
                 className="glass border-border/50 focus:border-[var(--neon-blue)] resize-none"
               />
             </div>
 
             <div className="space-y-3">
               <Label>Preferred Demo Type *</Label>
-              <RadioGroup defaultValue="live-call" className="space-y-3">
+              <RadioGroup value={formData.demoType} onValueChange={handleDemoTypeChange} className="space-y-3">
                 <div className="glass rounded-xl p-4 cursor-pointer hover:border-[var(--neon-blue)] border border-transparent transition-colors">
                   <div className="flex items-center gap-3">
                     <RadioGroupItem value="live-call" id="live-call" />
@@ -190,9 +250,10 @@ export default function DemoPage() {
 
             <Button
               type="submit"
+              disabled={isSubmitting}
               className="w-full bg-gradient-to-r from-[var(--neon-blue)] to-[var(--neon-purple)] glow-blue text-lg py-6"
             >
-              Request Demo
+              {isSubmitting ? "Submitting..." : "Request Demo"}
             </Button>
           </form>
         </div>
