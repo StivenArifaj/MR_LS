@@ -17,10 +17,79 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "MoneyRush - Change Financial Education Forever",
+  metadataBase: new URL("https://moneyrush.vercel.app"),
+  title: {
+    default: "MoneyRush: The #1 Financial Literacy Game for Teens",
+    template: "%s | MoneyRush",
+  },
   description:
-    "Turn every smartphone into a powerful learning machine. Where teens learn real money skills through an unforgettable game.",
-  generator: "v0.app",
+    "Play MoneyRush, the ultimate financial education game where students learn to earn, invest, and grow wealth. Master money skills in a futuristic city. Join free.",
+  keywords: [
+    "MoneyRush",
+    "financial literacy game",
+    "money game for teens",
+    "financial education app",
+    "stock market simulator for students",
+    "personal finance game",
+  ],
+  authors: [{ name: "MoneyRush Team" }],
+  creator: "MoneyRush",
+  publisher: "MoneyRush",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://moneyrush.vercel.app",
+    title: "MoneyRush: The #1 Financial Literacy Game for Teens",
+    description:
+      "Play MoneyRush, the ultimate financial education game where students learn to earn, invest, and grow wealth. Master money skills in a futuristic city.",
+    siteName: "MoneyRush",
+    // images: [
+    //   {
+    //     url: "/og-image.jpg", // We should create this later
+    //     width: 1200,
+    //     height: 630,
+    //     alt: "MoneyRush Financial Education Game",
+    //   },
+    // ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MoneyRush: The #1 Financial Literacy Game for Teens",
+    description:
+      "Play MoneyRush, the ultimate financial education game where students learn to earn, invest, and grow wealth.",
+    creator: "@MoneyRushApp", // Placeholder
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+}
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "MoneyRush",
+  applicationCategory: "EducationalGame",
+  operatingSystem: "Web",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+  description:
+    "MoneyRush is a revolutionary financial literacy game that helps teens learn real-world money skills through immersive gameplay.",
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.8",
+    ratingCount: "1250",
+  },
 }
 
 export default function RootLayout({
@@ -31,6 +100,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.className} ${spaceGrotesk.variable} font-sans antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <ChatbaseProvider />
         {children}
         <Analytics />

@@ -47,15 +47,17 @@ export function HeroSection() {
 
           {/* Main Headline */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight animate-fade-in-up text-balance">
-            Change Financial
+            MoneyRush: Change
             <br />
             <span className="bg-gradient-to-r from-[var(--neon-blue)] via-[var(--neon-purple)] to-[var(--neon-green)] bg-clip-text text-transparent">
-              Education Forever
+              Financial Education Forever
             </span>
           </h1>
 
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto animate-fade-in-up delay-200 text-balance">
-            Where teens learn real money skills through an unforgettable game. Build. Earn. Invest. Grow.
+            Welcome to <strong>MoneyRush</strong>, the revolutionary <strong>financial literacy game</strong> where teens
+            transform into tycoons. Unlike boring textbooks, <strong>MoneyRush</strong> simulates a real-world economy.
+            Build. Earn. Invest. Grow.
           </p>
 
           {/* CTA Buttons */}
@@ -67,7 +69,7 @@ export function HeroSection() {
             >
               <Link href="/register">Start Learning Free</Link>
             </Button>
-            
+
             <Dialog>
               <DialogTrigger asChild>
                 <Button
@@ -80,10 +82,10 @@ export function HeroSection() {
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-4xl p-0 bg-transparent border-0">
-                  <video className="w-full rounded-lg" controls autoPlay>
-                    <source src="/20250611131857.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
+                <video className="w-full rounded-lg" controls autoPlay>
+                  <source src="/20250611131857.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </DialogContent>
             </Dialog>
 
