@@ -47,17 +47,15 @@ export function HeroSection() {
 
           {/* Main Headline */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight animate-fade-in-up text-balance">
-            MoneyRush: Change
+            Change Financial
             <br />
             <span className="bg-gradient-to-r from-[var(--neon-blue)] via-[var(--neon-purple)] to-[var(--neon-green)] bg-clip-text text-transparent">
-              Financial Education Forever
+              Education Forever
             </span>
           </h1>
 
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto animate-fade-in-up delay-200 text-balance">
-            Welcome to <strong>MoneyRush</strong>, the revolutionary <strong>financial literacy game</strong> where teens
-            transform into tycoons. Unlike boring textbooks, <strong>MoneyRush</strong> simulates a real-world economy.
-            Build. Earn. Invest. Grow.
+            Where teens learn real money skills through an unforgettable game. Build. Earn. Invest. Grow.
           </p>
 
           {/* CTA Buttons */}
