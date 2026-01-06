@@ -23,7 +23,10 @@ export const metadata: Metadata = {
     template: "%s | MoneyRush",
   },
   description:
-    "Play MoneyRush, the ultimate financial education game where students learn to earn, invest, and grow wealth. Master money skills in a futuristic city. Join free.",
+    "Play MoneyRush, the #1 financial literacy game. Students learn to earn, invest, and grow wealth in a futuristic city. Join for free!",
+  alternates: {
+    canonical: "/",
+  },
   keywords: [
     "MoneyRush",
     "financial literacy game",
