@@ -81,7 +81,7 @@ export function SolutionSection() {
             <div className="aspect-video rounded-2xl bg-gradient-to-br from-[var(--neon-blue)]/20 via-[var(--neon-purple)]/20 to-[var(--neon-green)]/20 flex items-center justify-center relative overflow-hidden">
               <img
                 src={screenshots[currentScreenshot] || "/placeholder.svg"}
-                alt={`App Screenshot ${currentScreenshot + 1}`}
+                alt={`MoneyRush Financial Game Interface - User Earning and Investment Screenshot ${currentScreenshot + 1}`}
                 className="w-full h-full object-contain rounded-2xl transition-all duration-300"
               />
             </div>
@@ -108,9 +108,8 @@ export function SolutionSection() {
                 <button
                   key={index}
                   onClick={() => setCurrentScreenshot(index)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === currentScreenshot ? "bg-[var(--neon-blue)] w-8" : "bg-muted-foreground"
-                  }`}
+                  className={`w-2 h-2 rounded-full transition-all ${index === currentScreenshot ? "bg-[var(--neon-blue)] w-8" : "bg-muted-foreground"
+                    }`}
                   aria-label={`Go to screenshot ${index + 1}`}
                 />
               ))}

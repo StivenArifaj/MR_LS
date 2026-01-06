@@ -95,7 +95,7 @@ export function HeroSection() {
               <div className="aspect-video rounded-2xl bg-gradient-to-br from-[var(--neon-blue)]/20 via-[var(--neon-purple)]/20 to-[var(--neon-green)]/20 flex items-center justify-center relative overflow-hidden">
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Phoenix_10_A_futuristic_colorful_city_made_of_coins_and_money_0-vXPIHWmMNP4UIWA5h51RmYef1BI5SL.jpg"
-                  alt="MoneyRush FinCity - Futuristic Financial World"
+                  alt="MoneyRush Financial Literacy Game - Futuristic City of Wealth"
                   className="w-full h-full object-cover rounded-2xl"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
