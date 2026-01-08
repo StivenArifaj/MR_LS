@@ -43,7 +43,7 @@ export function HowItWorksSection() {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
-            How It{" "}
+            How MoneyRush{" "}
             <span className="bg-gradient-to-r from-[var(--neon-blue)] to-[var(--neon-purple)] bg-clip-text text-transparent">
               Works
             </span>

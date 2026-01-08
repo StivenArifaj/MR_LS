@@ -15,9 +15,9 @@ export function VisionSection() {
           </div>
 
           <h2 className="text-4xl md:text-6xl font-bold text-balance">
-            Our Vision:{" "}
+            MoneyRush Vision:{" "}
             <span className="bg-gradient-to-r from-[var(--neon-blue)] via-[var(--neon-purple)] to-[var(--neon-green)] bg-clip-text text-transparent">
-              Turn Every Smartphone Into A Powerful Learning Machine
+              Turn Every Smartphone Into A Learning Machine
             </span>
           </h2>
 

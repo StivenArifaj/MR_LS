@@ -33,7 +33,7 @@ export function ProblemSection() {
           <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
             The World Has a{" "}
             <span className="bg-gradient-to-r from-[var(--neon-purple)] to-destructive bg-clip-text text-transparent">
-              Money Problem
+              Financial Literacy Problem
             </span>
           </h2>
         </div>

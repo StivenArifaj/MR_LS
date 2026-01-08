@@ -47,15 +47,15 @@ export function HeroSection() {
 
           {/* Main Headline */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight animate-fade-in-up text-balance">
-            Change Financial
+            MoneyRush: Change
             <br />
             <span className="bg-gradient-to-r from-[var(--neon-blue)] via-[var(--neon-purple)] to-[var(--neon-green)] bg-clip-text text-transparent">
-              Education Forever
+              Financial Education Forever
             </span>
           </h1>
 
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto animate-fade-in-up delay-200 text-balance">
-            Where teens learn real money skills through an unforgettable game. Build. Earn. Invest. Grow.
+            The #1 financial literacy game where teens master real money skills. Build wealth, invest smart, and learn personal finance through immersive gameplay.
           </p>
 
           {/* CTA Buttons */}

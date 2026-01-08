@@ -61,9 +61,9 @@ export function FeaturesSection() {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
-            Built For{" "}
+            Financial Education{" "}
             <span className="bg-gradient-to-r from-[var(--neon-blue)] to-[var(--neon-green)] bg-clip-text text-transparent">
-              Everyone
+              For Everyone
             </span>
           </h2>
         </div>

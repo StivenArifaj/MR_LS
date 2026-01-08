@@ -18,9 +18,9 @@ export function FinalCTASection() {
           </div>
 
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-balance">
-            Ready to Change How You{" "}
+            Ready to Master{" "}
             <span className="bg-gradient-to-r from-[var(--neon-blue)] via-[var(--neon-purple)] to-[var(--neon-green)] bg-clip-text text-transparent">
-              Think About Money?
+              Financial Literacy?
             </span>
           </h2>
 
